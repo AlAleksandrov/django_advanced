@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Migrations (optional — обикновено се качват в Git)
+# Ако не искаш: коментирай
+# */migrations/*
+# !*/migrations/__init__.py
+
+# Environment variables
+.env
+
+# VSCode
+.vscode/
+
+# PyCharm / JetBrains
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Byte-compiled
+*.mo
+*.cache
+
+# Coverage / Testing
+htmlcov/
+.tox/
+.coverage
+coverage.json
