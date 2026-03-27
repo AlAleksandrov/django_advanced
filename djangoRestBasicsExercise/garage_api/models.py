@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.validators import MinValueValidator, MinLengthValidator
 from django.db import models
 
@@ -53,4 +55,33 @@ class Car(TimeStampModelMixin):
     manufacturer = models.ForeignKey(
         'Manufacturer',
         on_delete=models.CASCADE,
+        related_name='cars',
+    )
+
+
+class Part(TimeStampModelMixin):
+    name = models.CharField(
+        max_length=100,
+    )
+    serial_number = models.CharField(
+        max_length=100,
+    )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(
+                limit_value=Decimal('0.01'),
+                message="The price must be greater than 0",
+            )
+        ]
+    )
+    manufacturer = models.ForeignKey(
+        'Manufacturer',
+        on_delete=models.CASCADE,
+        related_name='parts',
+    )
+    cars = models.ManyToManyField(
+        'Car',
+        related_name='parts',
     )

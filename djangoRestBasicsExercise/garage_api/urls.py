@@ -1,9 +1,20 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
 from garage_api import views
 
+router = DefaultRouter()
+router.register('parts', views.PartModelViewSet, basename='parts')
+
 urlpatterns = [
-    path('manufacturers/', views.ListManufacturerApiView.as_view(), name='manufacturers-list'),
-    path('cars/', views.CarListApiView.as_view(), name='cars-list'),
-    path('cars/stats/', views.CarStatsView.as_view(), name='cars-stats'),
-    path('cars/<int:pk>/', views.CarDetailApiView.as_view(), name='car-detail'),
-]
+
+    path('cars/', include([
+        path('', views.ListCreateCarApiView.as_view(), name='car-list'),
+        path('<int:pk>/', views.RetrieveUpdateDestroyCarApiView.as_view(), name='car-detail'),
+        path('stats/', views.CarStatsView.as_view(), name='car-stats'),
+        ])),
+    path('manufacturers/', include([
+        path('', views.ListCreateManufacturerApiView.as_view(), name='manufacturer-list'),
+        ])),
+    path('admin-dashboard/', views.AdminDashboardView.as_view(), name='admin-dashboard')
+] + router.urls
